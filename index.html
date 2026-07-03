@@ -4,184 +4,473 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>ElitePlafond | Premium Architectural Ceilings</title>
-    
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
-    <!-- Google Fonts & Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Metrophobic&amp;display=swap" rel="stylesheet"/>
     
-    <!-- Custom CSS Extension -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-surface text-on-surface overflow-x-hidden">
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#763300",
+                    "surface": "#16130b",
+                    "on-background": "#ece1d3",
+                    "secondary-fixed": "#3d392f",
+                    "inverse-on-surface": "#16130b",
+                    "on-surface": "#ece1d3",
+                    "tertiary-container": "#331200",
+                    "secondary-fixed-dim": "#28241b",
+                    "on-tertiary-fixed": "#331200",
+                    "outline-variant": "#4d4639",
+                    "on-primary-fixed": "#110e07",
+                    "surface-dim": "#16130b",
+                    "on-primary": "#110e07",
+                    "on-primary-fixed-variant": "#d4af37",
+                    "on-secondary": "#110e07",
+                    "tertiary-fixed-dim": "#ffb68e",
+                    "tertiary-fixed": "#d4af37",
+                    "primary-fixed-dim": "#b4952f",
+                    "surface-bright": "#3d392f",
+                    "on-primary-container": "#d4af37",
+                    "background": "#110e07",
+                    "on-tertiary": "#110e07",
+                    "on-secondary-container": "#ece1d3",
+                    "inverse-primary": "#d4af37",
+                    "primary": "#d4af37",
+                    "tertiary": "#d4af37",
+                    "on-error": "#ffffff",
+                    "primary-container": "#28241b",
+                    "surface-container": "#1f1b13",
+                    "outline": "#968f80",
+                    "surface-container-lowest": "#110e07",
+                    "on-secondary-fixed": "#ece1d3",
+                    "secondary": "#968f80",
+                    "surface-container-high": "#28241b",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#4d4639",
+                    "surface-tint": "#d4af37",
+                    "on-tertiary-container": "#cf6721",
+                    "on-surface-variant": "#c6c6cd",
+                    "secondary-container": "#28241b",
+                    "surface-container-low": "#1f1b13",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#ece1d3",
+                    "surface-container-highest": "#3d392f",
+                    "primary-fixed": "#d4af37",
+                    "on-secondary-fixed-variant": "#968f80",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-desktop": "80px",
+                    "margin-mobile": "20px",
+                    "max-width": "1280px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["Metrophobic", "sans-serif"],
+                    "body-md": ["Hanken Grotesk", "sans-serif"],
+                    "headline-md": ["Metrophobic", "sans-serif"],
+                    "body-lg": ["Hanken Grotesk", "sans-serif"],
+                    "display-lg": ["Metrophobic", "sans-serif"],
+                    "label-caps": ["Hanken Grotesk", "sans-serif"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "label-sm": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Hanken Grotesk', sans-serif; background-color: #110e07; }
+        .featured-border { border-top: 4px solid #d4af37; }
+        .nav-active { color: #d4af37 !important; font-weight: bold; border-bottom: 2px solid #d4af37; }
+        
+        /* Modul Transisi Halaman Murni Custom */
+        .page-view {
+            transition: opacity 450ms ease-in-out, transform 450ms ease-in-out;
+        }
 
-    <!-- Top Navigation Bar -->
-    <nav class="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-primary/20 shadow-lg">
-        <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-desktop py-4">
-            <div class="font-display-lg text-headline-md tracking-tight text-primary">
-                ElitePlafond
+        /* ===== Responsive typography for mobile =====
+           The custom fontSize tokens above (display-lg, headline-md, body-lg)
+           render at fixed desktop pixel sizes by default. These overrides
+           scale them down fluidly on small screens so headings and copy
+           don't overflow or force horizontal scrolling on phones. */
+        .text-display-lg {
+            font-size: clamp(30px, 8vw, 64px);
+        }
+        .text-headline-md {
+            font-size: clamp(22px, 5.5vw, 32px);
+        }
+        .text-body-lg {
+            font-size: clamp(15px, 3.6vw, 18px);
+        }
+
+        /* Mobile nav drawer */
+        #mobile-nav-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 350ms ease;
+        }
+        #mobile-nav-panel.open {
+            max-height: 480px;
+        }
+        #mobile-menu-icon.open {
+            transform: rotate(90deg);
+        }
+        #mobile-menu-icon {
+            transition: transform 250ms ease;
+        }
+    </style>
+</head>
+<body class="bg-[#110e07] text-[#ece1d3] overflow-x-hidden">
+
+<!-- Top Navigation Bar -->
+<nav class="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-primary/20 shadow-lg">
+    <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-4">
+        <div class="font-display-lg text-headline-md tracking-tight text-primary cursor-pointer" onclick="switchPage('home'); closeMobileNav();">
+            ElitePlafond
+        </div>
+        <div class="hidden md:flex gap-gutter items-center">
+            <!-- Nav Link: Home -->
+            <div class="relative group py-2">
+                <a id="nav-home" class="nav-active font-body-md text-body-md text-secondary hover:text-primary transition-all flex items-center gap-1 cursor-pointer pb-1" onclick="switchPage('home')">
+                    Home
+                </a>
             </div>
-            <div class="hidden md:flex gap-gutter items-center">
-                <a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1 transition-all" href="#">Home</a>
-                <a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#services">Services</a>
-                <a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#portfolio">Portfolio</a>
-                <a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#estimation">Estimation</a>
+
+            <!-- Nav Link: Services -->
+            <div class="relative group py-2">
+                <a id="nav-services" class="font-body-md text-body-md text-secondary hover:text-primary transition-all flex items-center gap-1 cursor-pointer pb-1" onclick="switchPage('services')">
+                    Services
+                    <span class="material-symbols-outlined transition-transform group-hover:rotate-180" style="font-size: 16px;">keyboard_arrow_down</span>
+                </a>
+                <!-- Dropdown Items Services -->
+                <div class="absolute left-0 mt-2 w-56 bg-surface border border-outline-variant shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <a onclick="switchPage('services')" class="block px-4 py-3 font-body-md text-label-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors border-b border-outline-variant/30 cursor-pointer">Plafon Gypsum</a>
+                    <a onclick="switchPage('services')" class="block px-4 py-3 font-body-md text-label-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors border-b border-outline-variant/30 cursor-pointer">Plafon PVC</a>
+                    <a onclick="switchPage('services')" class="block px-4 py-3 font-body-md text-label-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors border-b border-outline-variant/30 cursor-pointer">Plafon Kayu</a>
+                    <a onclick="switchPage('services')" class="block px-4 py-3 font-body-md text-label-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors cursor-pointer">Plafon GRC</a>
+                </div>
             </div>
-            <button class="bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps transition-transform duration-200 active:scale-95 hover:brightness-110">
+
+            <a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors cursor-pointer" onclick="switchPage('home'); setTimeout(() => document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'}), 500)">Portfolio</a>
+            <a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors cursor-pointer" onclick="switchPage('home'); setTimeout(() => document.getElementById('estimation').scrollIntoView({behavior: 'smooth'}), 500)">Estimation</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="hidden sm:inline-flex bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps transition-transform duration-200 active:scale-95 hover:brightness-110">
+                Free Consultation
+            </button>
+            <!-- Mobile hamburger toggle -->
+            <button aria-label="Toggle menu" class="md:hidden w-11 h-11 flex items-center justify-center border border-primary/30 text-primary" onclick="toggleMobileNav()">
+                <span id="mobile-menu-icon" class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-nav-panel" class="md:hidden border-t border-primary/10 bg-surface">
+        <div class="px-margin-mobile py-4 flex flex-col gap-1">
+            <a class="font-body-md text-body-md text-on-surface py-3 border-b border-outline-variant/30 cursor-pointer" onclick="switchPage('home'); closeMobileNav();">Home</a>
+            <a class="font-body-md text-body-md text-on-surface py-3 border-b border-outline-variant/30 cursor-pointer" onclick="switchPage('services'); closeMobileNav();">Services</a>
+            <a class="font-body-md text-body-md text-secondary py-2 pl-4 border-b border-outline-variant/20 cursor-pointer" onclick="switchPage('services'); closeMobileNav();">— Plafon Gypsum</a>
+            <a class="font-body-md text-body-md text-secondary py-2 pl-4 border-b border-outline-variant/20 cursor-pointer" onclick="switchPage('services'); closeMobileNav();">— Plafon PVC</a>
+            <a class="font-body-md text-body-md text-secondary py-2 pl-4 border-b border-outline-variant/20 cursor-pointer" onclick="switchPage('services'); closeMobileNav();">— Plafon Kayu</a>
+            <a class="font-body-md text-body-md text-secondary py-2 pl-4 border-b border-outline-variant/30 cursor-pointer" onclick="switchPage('services'); closeMobileNav();">— Plafon GRC</a>
+            <a class="font-body-md text-body-md text-on-surface py-3 border-b border-outline-variant/30 cursor-pointer" onclick="switchPage('home'); closeMobileNav(); setTimeout(() => document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'}), 500)">Portfolio</a>
+            <a class="font-body-md text-body-md text-on-surface py-3 border-b border-outline-variant/30 cursor-pointer" onclick="switchPage('home'); closeMobileNav(); setTimeout(() => document.getElementById('estimation').scrollIntoView({behavior: 'smooth'}), 500)">Estimation</a>
+            <button class="mt-4 w-full bg-primary text-on-primary px-6 py-4 font-label-caps text-label-caps active:scale-95 transition-transform">
                 Free Consultation
             </button>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Hero Section -->
-    <section class="relative h-[921px] flex items-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent z-10"></div>
-            <div class="w-full h-full bg-cover bg-center scale-105 animate-pulse" style="animation-duration: 10s; background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8jbmiep_HvvT5KXX6Rc0BfJRpD-59YdbsnzdALbVCx4KNPWdvU2DpiZ8TZ5pMkq4dKppa_-b3P-VZWAVxOpeZSoHvQ0crip1NZRLj-R5KSm_dcp4LyE91r-fE4HEDPWp4inf8ZYu65No8m_IVOtZJmBuuaAPVRMwSiA8iq17_xGvxcw_eZwP6lf1GYZSHfgqvBzqe_JN0v2YIezue-5fHbWN-WeiPxxnEBU6ltIiUloJx7SB3b7lA5jMqMnspn9iRyziP-1sHV5M')"></div>
-        </div>
-        <div class="relative z-20 max-w-max-width mx-auto px-margin-desktop w-full">
-            <div class="max-w-2xl">
-                <span class="inline-block px-4 py-1 bg-primary/20 text-primary border border-primary/30 font-label-caps text-label-caps mb-6">
-                    ARCHITECTURAL EXCELLENCE
-                </span>
-                <h1 class="font-display-lg text-display-lg mb-8 leading-tight text-on-surface">
-                    Transformasi Ruang dengan Plafon Elegan
-                </h1>
-                <p class="font-body-lg text-body-lg text-secondary mb-10 max-w-lg">
-                    Elevating interiors through masterfully crafted ceiling installations. Precision, artistry, and technical perfection for the modern home.
-                </p>
-                <div class="flex gap-4">
-                    <button class="bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:brightness-110 transition-all flex items-center gap-2">
-                        View Portfolio <span class="material-symbols-outlined">arrow_forward</span>
-                    </button>
-                    <button class="border border-primary text-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all">
-                        Our Process
-                    </button>
-                </div>
+<!-- ========================================== -->
+<!-- PAGES CONTAINER WITH SMOOTH SLIDE-UP TRANSITION -->
+<!-- ========================================== -->
+<main class="relative min-h-screen">
+    
+    <!-- PAGE 1: HOME VIEW -->
+    <div id="page-home" class="page-view opacity-100 translate-y-0 block">
+        <!-- Hero Section -->
+        <section class="relative min-h-[560px] h-auto md:h-[921px] flex items-center overflow-hidden py-24 md:py-0">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-surface via-surface/85 md:via-surface/80 to-surface/40 md:to-transparent z-10"></div>
+                <div class="w-full h-full bg-cover bg-center scale-105 animate-pulse" style="animation-duration: 10s; background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8jbmiep_HvvT5KXX6Rc0BfJRpD-59YdbsnzdALbVCx4KNPWdvU2DpiZ8TZ5pMkq4dKppa_-b3P-VZWAVxOpeZSoHvQ0crip1NZRLj-R5KSm_dcp4LyE91r-fE4HEDPWp4inf8ZYu65No8m_IVOtZJmBuuaAPVRMwSiA8iq17_xGvxcw_eZwP6lf1GYZSHfgqvBzqe_JN0v2YIezue-5fHbWN-WeiPxxnEBU6ltIiUloJx7SB3b7lA5jMqMnspn9iRyziP-1sHV5M')"></div>
             </div>
-        </div>
-        <!-- Vertical Accent -->
-        <div class="absolute right-margin-desktop bottom-0 w-1 bg-primary h-48 hidden lg:block"></div>
-    </section>
-
-    <!-- Why Choose Us - Bento Grid -->
-    <section class="py-32 bg-surface" id="services">
-        <div class="max-w-max-width mx-auto px-margin-desktop">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-                <div class="max-w-xl">
-                    <h2 class="font-display-lg text-headline-md mb-4 uppercase tracking-wider text-on-surface">Why Choose ElitePlafond</h2>
-                    <p class="font-body-md text-body-md text-secondary">We combine structural integrity with aesthetic vision to create overhead masterpieces that redefine your living environment.</p>
-                </div>
-                <div class="text-label-caps font-label-caps text-primary/60">EST. 2014</div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                <!-- Card 1: Expertise -->
-                <div class="group bg-surface-container border border-primary/10 p-10 hover:border-primary transition-all duration-500 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/10 -translate-y-12 translate-x-12 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
-                    <span class="material-symbols-outlined text-4xl text-primary mb-8">architecture</span>
-                    <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Expertise</h3>
-                    <p class="font-body-md text-body-md text-secondary leading-relaxed">Our team consists of certified architectural craftsmen with over a decade of experience in specialized ceiling geometries and acoustic engineering.</p>
-                    <div class="mt-8 pt-8 border-t border-primary/10 flex items-center gap-2 text-primary font-bold cursor-pointer">
-                        <span class="text-label-caps font-label-caps">OUR TECHNIQUES</span>
-                        <span class="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">trending_flat</span>
-                    </div>
-                </div>
-                <!-- Card 2: Speed -->
-                <div class="group bg-surface-container border border-primary/10 p-10 hover:border-primary transition-all duration-500 relative overflow-hidden">
-                    <span class="material-symbols-outlined text-4xl text-primary mb-8">speed</span>
-                    <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Precision Speed</h3>
-                    <p class="font-body-md text-body-md text-secondary leading-relaxed">Efficient installation workflows designed to minimize downtime without compromising the microscopic precision our brand is known for.</p>
-                    <div class="mt-8 pt-8 border-t border-primary/10 flex items-center gap-2 text-primary font-bold cursor-pointer">
-                        <span class="text-label-caps font-label-caps">TIMELINE ESTIMATE</span>
-                        <span class="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">trending_flat</span>
-                    </div>
-                </div>
-                <!-- Card 3: Warranty -->
-                <div class="group bg-surface-container-highest p-10 border-t-4 border-primary transition-all duration-500 relative">
-                    <span class="material-symbols-outlined text-4xl text-primary mb-8" style="font-variation-settings: 'FILL' 1;">verified_user</span>
-                    <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Lifetime Warranty</h3>
-                    <p class="font-body-md text-body-md text-secondary leading-relaxed">We stand by our structures. Every installation comes with a comprehensive structural guarantee, ensuring your investment remains flawless.</p>
-                    <div class="mt-8 pt-8 border-t border-primary/10 flex items-center gap-2 text-primary font-bold cursor-pointer">
-                        <span class="text-label-caps font-label-caps">WARRANTY TERMS</span>
-                        <span class="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">trending_flat</span>
+            <div class="relative z-20 max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop w-full">
+                <div class="max-w-2xl">
+                    <span class="inline-block px-4 py-1 bg-primary/20 text-primary border border-primary/30 font-label-caps text-label-caps mb-6">
+                        ARCHITECTURAL EXCELLENCE
+                    </span>
+                    <h1 class="font-display-lg text-display-lg mb-6 md:mb-8 leading-tight text-on-surface">
+                        Transformasi Ruang dengan Plafon Elegan
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-secondary mb-8 md:mb-10 max-w-lg">
+                        Elevating interiors through masterfully crafted ceiling installations. Precision, artistry, and technical perfection for the modern home.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})" class="bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                            View Portfolio <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                        <button onclick="switchPage('services')" class="border border-primary text-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all text-center">
+                            Our Services
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="absolute right-margin-desktop bottom-0 w-1 bg-primary h-48 hidden lg:block"></div>
+        </section>
 
-    <!-- Featured Projects Gallery - Asymmetric Grid -->
-    <section class="py-32 bg-surface-container-lowest" id="portfolio">
-        <div class="max-w-max-width mx-auto px-margin-desktop">
-            <div class="mb-20 text-center">
-                <h2 class="font-display-lg text-headline-md mb-4 text-on-surface">Featured Projects</h2>
-                <p class="font-body-md text-body-md text-secondary max-w-2xl mx-auto">A selection of our most challenging and rewarding ceiling transformations across premium residential and commercial spaces.</p>
+        <!-- Why Choose Us -->
+        <section class="py-20 md:py-32 bg-surface">
+            <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-6 md:gap-8">
+                    <div class="max-w-xl">
+                        <h2 class="font-display-lg text-headline-md mb-4 uppercase tracking-wider text-on-surface">Why Choose ElitePlafond</h2>
+                        <p class="font-body-md text-body-md text-secondary">We combine structural integrity with aesthetic vision to create overhead masterpieces that redefine your living environment.</p>
+                    </div>
+                    <div class="text-label-caps font-label-caps text-primary/60">EST. 2014</div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                    <div class="group bg-surface-container border border-primary/10 p-8 md:p-10 hover:border-primary transition-all duration-500 relative overflow-hidden">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-6 md:mb-8 block">architecture</span>
+                        <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Expertise</h3>
+                        <p class="font-body-md text-body-md text-secondary leading-relaxed">Our team consists of certified architectural craftsmen with over a decade of experience in specialized ceiling geometries.</p>
+                    </div>
+                    <div class="group bg-surface-container border border-primary/10 p-8 md:p-10 hover:border-primary transition-all duration-500 relative overflow-hidden">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-6 md:mb-8 block">speed</span>
+                        <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Precision Speed</h3>
+                        <p class="font-body-md text-body-md text-secondary leading-relaxed">Efficient installation workflows designed to minimize downtime without compromising the precision.</p>
+                    </div>
+                    <div class="group bg-surface-container-highest p-8 md:p-10 border-t-4 border-primary transition-all duration-500 relative">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-6 md:mb-8 block" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                        <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Lifetime Warranty</h3>
+                        <p class="font-body-md text-body-md text-secondary leading-relaxed">We stand by our structures. Every installation comes with a comprehensive structural guarantee.</p>
+                    </div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter h-auto md:h-[1000px]">
-                <!-- Project 1 -->
-                <div class="md:col-span-8 group relative overflow-hidden bg-surface-container cursor-pointer">
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-10">
-                        <div class="text-on-primary translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-                            <p class="font-label-caps text-label-caps mb-2 text-primary">RESIDENTIAL</p>
-                            <h4 class="font-headline-md text-headline-md">The Zenith Atrium</h4>
+        </section>
+
+        <!-- Featured Projects Gallery -->
+        <section class="py-20 md:py-32 bg-surface-container-lowest" id="portfolio">
+            <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="mb-12 md:mb-20 text-center">
+                    <h2 class="font-display-lg text-headline-md mb-4 text-on-surface">Featured Projects</h2>
+                    <p class="font-body-md text-body-md text-secondary max-w-2xl mx-auto">A selection of our most challenging and rewarding ceiling transformations.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+                    <div class="md:col-span-8 group relative overflow-hidden bg-surface-container cursor-pointer h-72 md:h-[1000px]">
+                        <div class="absolute inset-0 bg-primary/20 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-6 md:p-10">
+                            <div class="text-on-primary translate-y-0 md:translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="font-label-caps text-label-caps mb-2 text-primary">RESIDENTIAL</p>
+                                <h4 class="font-headline-md text-headline-md">The Zenith Atrium</h4>
+                            </div>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAH53LRzJjaAO471exAWul0w_7-Rx8YKmeGkeZHfjWqoPGH9LdZbWd_7NyNQ3Sh6S5rhuuF2vTcdULZ7PIXd6dzuHT36tJ7M5v7jDbF34g-B2UfgVDIaOuegjm_lOLO_r1UjuaDeOeU3Stv4b7FYPa4mGx-XESoZvCCGflsGcX6cJVEkgBu1qrxa6IIIJyTqVRDEbj2B1nQ0UGNDYKgd6sAFWgEliEk4Q5VTSG7QidWc4W_W0bKuTuI5OFCPOimVdkFdFvk8rtUTXs')"></div>
+                    </div>
+                    <div class="md:col-span-4 group relative overflow-hidden bg-surface-container cursor-pointer h-72 md:h-[1000px]">
+                        <div class="absolute inset-0 bg-primary/20 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-6 md:p-10">
+                            <div class="text-on-primary translate-y-0 md:translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="font-label-caps text-label-caps mb-2 text-primary">COMMERCIAL</p>
+                                <h4 class="font-headline-md text-headline-md">Lumina Corporate Lobby</h4>
+                            </div>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfSis2tH4ggQ83t0Jgu4vw9B42dD7fucyQVwykTJM_kpi6CwZbg7RNywxCKYDoKW2HGdbiOBnzxdl_X20f21qqTZgl3UW_pA5IhKXksllz_Hq9jpRKCrNvxD3FRWPJY0VORIFzyyTz1L0Mh1sNpyaeodOt8yvagwWfMiA17duCcvd7A22u_0LVCow93A8dsiV8PL775mgD22rHnN9T0vFOFU9dAkNESvJwLeBshFEe6lWWKJckiRIui4-9PPRLCYjZtODakEGyjvI')"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 2: SERVICES VIEW (DENGAN TAMPILAN BACKGROUND GOLD DOT GRID PREMANENT SPERTI SCREENSHOT_20260703-130231.JPG) -->
+    <div id="page-services" class="page-view opacity-0 translate-y-4 hidden">
+        
+        <!-- Hero Services (Replikasi Akurat Berdasarkan Screenshot_20260703-130231.jpg) -->
+        <section class="relative min-h-[420px] md:min-h-[520px] flex items-center overflow-hidden bg-[#110e07] text-[#ece1d3] py-20 md:py-28 border-b border-primary/10">
+            <!-- Golden Dot Grid Pattern Background -->
+            <div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="golden-dot-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <path d="M 30 26 L 30 34 M 26 30 L 34 30" stroke="#d4af37" stroke-width="0.8" opacity="0.6"/>
+                            <circle cx="30" cy="30" r="1" fill="#d4af37" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#golden-dot-grid)" />
+                </svg>
+            </div>
+
+            <!-- Konten Teks Hero -->
+            <div class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop z-10 w-full">
+                <div class="max-w-3xl">
+                    <span class="font-display-lg text-[#d4af37] tracking-[0.2em] md:tracking-[0.25em] text-[12px] md:text-[14px] font-bold block mb-5 md:mb-6 uppercase">
+                        ARCHITECTURAL EXCELLENCE
+                    </span>
+                    <h1 class="font-display-lg text-[32px] sm:text-[42px] md:text-[68px] font-normal mb-6 md:mb-8 leading-[1.2] md:leading-[1.15] text-[#ece1d3] tracking-tight">
+                        Our Premium Ceiling Solutions
+                    </h1>
+                    <p class="font-body-lg text-[#968f80] text-[16px] md:text-[20px] max-w-2xl leading-relaxed font-light">
+                        Transforming overhead spaces into architectural masterpieces. Explore our range of high-end materials designed for luxury, durability, and acoustic perfection.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Bento Grid Section -->
+        <section class="py-16 md:py-24 bg-background">
+            <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+                    <!-- Plafon Gypsum -->
+                    <div class="md:col-span-8 group relative overflow-hidden bg-surface border border-outline-variant featured-border shadow-2xl">
+                        <div class="flex flex-col md:flex-row h-full">
+                            <div class="w-full md:w-1/2 h-56 md:h-full overflow-hidden">
+                                <img alt="Luxurious gypsum ceiling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0f3l8LTqsucfsYWVqEfcDxR7V75QAePA5CpiJVKGUU4JtBxeW0zUXn7sIHzwR696DRYXdXEealq7GKJ3gW5lmp_BcKF14Zv_o-Y1VKw53OqDTOaaBFXAnOItlMrUdOt_Lm-M4PJ1Jq7mF1k32ISCIvS-m8DuuEmjoc-0bXu28gD6jj541c16RrzkJTv960YoBDj7QMLymTxLpPMMIJp9rCrzlYmm2b9aOJRpn50O8Vy2znc_2oS90GbVFjvS1kA3TLUfFRTQOpY0"/>
+                            </div>
+                            <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
+                                        <h3 class="font-display-lg text-headline-md text-on-surface">Plafon Gypsum</h3>
+                                        <span class="bg-primary text-on-primary px-3 py-1 text-[10px] font-label-caps whitespace-nowrap">MOST POPULAR</span>
+                                    </div>
+                                    <p class="font-body-md text-secondary mb-6">The gold standard for luxury interiors, offering seamless finishes and unlimited design flexibility.</p>
+                                    <ul class="space-y-3 mb-8">
+                                        <li class="flex items-center gap-3 text-on-surface">
+                                            <span class="material-symbols-outlined text-primary" style="font-size: 18px;">check_circle</span>
+                                            <span>Premium Gypsum Boards</span>
+                                        </li>
+                                        <li class="flex items-center gap-3 text-on-surface">
+                                            <span class="material-symbols-outlined text-primary" style="font-size: 18px;">check_circle</span>
+                                            <span>Seamless joint finish</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="text-secondary font-label-caps mb-1 uppercase">Starting from</div>
+                                    <div class="text-primary font-display-lg text-headline-md mb-4">Rp 155,000<span class="text-body-md text-secondary font-normal"> / m²</span></div>
+                                    <button class="w-full py-4 border border-primary text-primary font-label-caps hover:bg-primary hover:text-on-primary transition-all uppercase">PROJECT DETAILS</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAH53LRzJjaAO471exAWul0w_7-Rx8YKmeGkeZHfjWqoPGH9LdZbWd_7NyNQ3Sh6S5rhuuF2vTcdULZ7PIXd6dzuHT36tJ7M5v7jDbF34g-B2UfgVDIaOuegjm_lOLO_r1UjuaDeOeU3Stv4b7FYPa4mGx-XESoZvCCGflsGcX6cJVEkgBu1qrxa6IIIJyTqVRDEbj2B1nQ0UGNDYKgd6sAFWgEliEk4Q5VTSG7QidWc4W_W0bKuTuI5OFCPOimVdkFdFvk8rtUTXs')"></div>
-                </div>
-                <!-- Project 2 -->
-                <div class="md:col-span-4 group relative overflow-hidden bg-surface-container cursor-pointer">
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-10">
-                        <div class="text-on-primary translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-                            <p class="font-label-caps text-label-caps mb-2 text-primary">COMMERCIAL</p>
-                            <h4 class="font-headline-md text-headline-md">Lumina Corporate Lobby</h4>
+
+                    <!-- Plafon PVC -->
+                    <div class="md:col-span-4 bg-surface border border-outline-variant group flex flex-col">
+                        <div class="h-56 md:h-64 overflow-hidden">
+                            <img alt="Waterproof PVC ceiling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOf79ytTYSaI1mO0-plGuF57eZm-IiWdkSvvMd8HYpEYrjkVq_mRl4pliM5p7hx0E30sYkEPGyQAyGGJskfltYdUYMYO-7ykaBjsQcger1nYtXymW-z477vslb-0ecEO22tXPQlADjC91_dBAXNxxZettzS_f7dbFZ8ZH8FXpeKXDQQZEERBLyr9Z4Xn6K0WLReSyRm1hesr-nXYpSXnTjzwa35wqXixpx21XBCBF-jVTWEDUjaN8an4m4jb3ilsdhaeEb9D4KzSc"/>
+                        </div>
+                        <div class="p-6 md:p-8 flex-grow flex flex-col">
+                            <h3 class="font-display-lg text-headline-md mb-2 text-on-surface">Plafon PVC</h3>
+                            <p class="font-body-md text-secondary mb-6">Modern, waterproof solutions ideal for humid areas without compromising on aesthetics.</p>
+                            <div class="mt-auto">
+                                <div class="text-secondary font-label-caps mb-1 uppercase">Starting from</div>
+                                <div class="text-primary font-display-lg text-headline-md mb-6">Rp 125,000<span class="text-body-md text-secondary font-normal"> / m²</span></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfSis2tH4ggQ83t0Jgu4vw9B42dD7fucyQVwykTJM_kpi6CwZbg7RNywxCKYDoKW2HGdbiOBnzxdl_X20f21qqTZgl3UW_pA5IhKXksllz_Hq9jpRKCrNvxD3FRWPJY0VORIFzyyTz1L0Mh1sNpyaeodOt8yvagwWfMiA17duCcvd7A22u_0LVCow93A8dsiV8PL775mgD22rHnN9T0vFOFU9dAkNESvJwLeBshFEe6lWWKJckiRIui4-9PPRLCYjZtODakEGyjvI')"></div>
-                </div>
-                <!-- Project 3 -->
-                <div class="md:col-span-4 group relative overflow-hidden bg-surface-container cursor-pointer">
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-10">
-                        <div class="text-on-primary translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-                            <p class="font-label-caps text-label-caps mb-2 text-primary">HOSPITALITY</p>
-                            <h4 class="font-headline-md text-headline-md">Grand Ballroom Gilded Tier</h4>
+
+                    <!-- Plafon Kayu -->
+                    <div class="md:col-span-5 bg-surface border border-outline-variant group flex flex-col">
+                        <div class="h-64 md:h-80 overflow-hidden">
+                            <img alt="Wooden ceiling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-69taIbFXOIc1Lb-IYS--hG1aO5_iJscGH7J3mIYe3kYUtTqxE2GKpKAFfLWv4T4Ffd27io3gNAOrLAJZbaFo6Cj1tMfMAxoiGrCdAP7Auxu4c0es1OdVvK7kE7vLG0Nk6uEU-5Z3usGhpGsd3LODCv7k2iv9rD5Heu8MhAJ26eEkw6ujUDndZS4Tn2kcJ1OHEXFWEqeBnf13wWRHBzrEv54nd15zgYK-0_s4qeL4VF9x4x0Tek7R5h9XZZ6dMZGC-eIn2clwrAY"/>
+                        </div>
+                        <div class="p-6 md:p-10 flex-grow flex flex-col">
+                            <h3 class="font-display-lg text-headline-md mb-2 text-on-surface">Plafon Kayu</h3>
+                            <p class="font-body-md text-secondary mb-6">Natural timber finish that brings warmth, elegance, and a sense of timeless craft.</p>
+                            <div class="mt-auto">
+                                <div class="text-secondary font-label-caps mb-1 uppercase">Starting from</div>
+                                <div class="text-primary font-display-lg text-headline-md">Rp 450,000<span class="text-body-md text-secondary font-normal"> / m²</span></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUEyL0bik7I3omsNBN0cLjcEVU_ODP9k8_6wFKu982EccoMtJDERfNgnK0v1npD4MxPzbJZwTxWeSyzmxH396_wCZK8gIjr5CIzGSJfKbiTzdDxsDZRcVrkdRRnAnl9EC_B7JY03rhGO_vRBGN9EE42gufE42aEiOVpk70N1Isl6shafiDfBIvyUszPiJ41FFaGl2PWkHPaqtDuwoyetDczAC1q0J48eRyYxVfSnZjyHaL3pti-8VH1sU5u2dTeoBBsr_PkI5PAH8')"></div>
-                </div>
-                <!-- Project 4 -->
-                <div class="md:col-span-8 group relative overflow-hidden bg-surface-container cursor-pointer">
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-10">
-                        <div class="text-on-primary translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-                            <p class="font-label-caps text-label-caps mb-2 text-primary">RESIDENTIAL</p>
-                            <h4 class="font-headline-md text-headline-md">Minimalist Sky Loft</h4>
+
+                    <!-- Plafon GRC -->
+                    <div class="md:col-span-7 bg-surface-container-low border border-outline-variant flex flex-col md:flex-row items-stretch overflow-hidden">
+                        <div class="p-6 md:p-10 md:w-3/5 flex flex-col">
+                            <h3 class="font-display-lg text-headline-md mb-4 text-on-surface">Plafon GRC</h3>
+                            <p class="font-body-md text-secondary mb-8 leading-relaxed">Glass-fiber Reinforced Concrete panels. Engineered for extreme durability and heavy-duty performance.</p>
+                            <div class="mt-auto">
+                                <div class="text-secondary font-label-caps mb-1 uppercase">Starting from</div>
+                                <div class="text-primary font-display-lg text-headline-md mb-6">Rp 180,000<span class="text-body-md text-secondary font-normal"> / m²</span></div>
+                                <button class="bg-primary text-on-primary px-8 py-3 font-label-caps tracking-widest hover:brightness-110 transition-all uppercase">SPECIFICATIONS</button>
+                            </div>
+                        </div>
+                        <div class="md:w-2/5 h-56 md:h-auto">
+                            <img alt="Industrial GRC ceiling" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-kcLpOwdfOFsEj-K7j7GVH6BNV7MmIjWF0EjGEP3k0v9eaMRYeyg0J5gXaaWtimJI2XZusmGmxB8wsE7psFquieaJnb9w36Cx9KQ9vV7PU1ZhFCWyRrDBYndEjGf2BFKopPscqPD9CG5GS_b2PRIoUKo3G5T1hiJDiSy1OPMPBrHNYsmnk6MVRkMV-bmatMaVgDQndXyqQJ3TYBSYZMMfFb9q7W_IVAp6zL7A6oEh6lDO1I3jt5SjLS1AY83wHM72bwqATnGEw1g"/>
                         </div>
                     </div>
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAL78Fvui9DScAKumDrwgU2lHS6aj-ewtrDiOtJ_es6gFjnjGf46bsyxqHKd1bEdzWazkCf0y1cB_Uog0WEapqIQ7kEuUIWHb6XPx1HEHTZXhtCOyOPKzmYE8X0W_xLTXPZX82nzUhM6bupJy_gLTYe2cyJ53YQdRxCgylJ_8VGInBzhSbikz4jKycJEEYZbJx6KGydCgvB0_6WMQF0BRAkNqD5kGXEopfWJXkCGb5W5GGRv3Q24BHEPHtBJP95GH_bp0U7Uz1A8wo')"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Consultation CTA Section -->
-    <section class="py-32 relative overflow-hidden bg-surface-container-lowest border-y border-primary/10" id="estimation">
+        <!-- Technical Specification -->
+        <section class="py-20 md:py-32 bg-surface text-on-surface border-y border-outline-variant">
+            <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6 md:gap-gutter">
+                    <div class="md:w-1/2">
+                        <h2 class="font-display-lg text-headline-md mb-6">Technical Integrity &amp; Standards</h2>
+                        <p class="font-body-lg text-secondary">We don't just install ceilings; we engineer overhead systems that adhere to safety standards.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                    <div class="p-6 md:p-8 border border-outline-variant bg-surface-container-lowest">
+                        <span class="material-symbols-outlined text-4xl mb-6 text-primary block">security</span>
+                        <h4 class="font-display-lg text-headline-md mb-4">Fire Safety</h4>
+                        <p class="font-body-md text-secondary">All materials meet Class A fire rating standards.</p>
+                    </div>
+                    <div class="p-6 md:p-8 border border-outline-variant bg-surface-container-lowest">
+                        <span class="material-symbols-outlined text-4xl mb-6 text-primary block">spatial_audio_off</span>
+                        <h4 class="font-display-lg text-headline-md mb-4">Acoustic Control</h4>
+                        <p class="font-body-md text-secondary">Optimized NRC ratings to minimize echo.</p>
+                    </div>
+                    <div class="p-6 md:p-8 border border-outline-variant bg-surface-container-lowest">
+                        <span class="material-symbols-outlined text-4xl mb-6 text-primary block">construction</span>
+                        <h4 class="font-display-lg text-headline-md mb-4">Precision Framing</h4>
+                        <p class="font-body-md text-secondary">Galvanized steel hollow frames with 0.4mm thickness.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SHARED DYNAMIC CTA SECTION -->
+    <section class="py-20 md:py-32 relative overflow-hidden bg-[#110e07] border-y border-primary/10" id="estimation">
         <div class="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none">
             <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs><pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#d4af37" stroke-width="0.5"></path></pattern></defs>
                 <rect fill="url(#grid)" height="100%" width="100%"></rect>
             </svg>
         </div>
-        <div class="max-w-max-width mx-auto px-margin-desktop relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-20">
+        <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12 md:gap-20">
                 <div class="flex-1">
-                    <h2 class="font-display-lg text-display-lg mb-8 text-on-surface">Ready to define your overhead space?</h2>
-                    <p class="font-body-lg text-body-lg text-secondary mb-10 max-w-lg">
-                        Speak with our principal designers today. We provide detailed 3D visualizations and structural assessments as part of our free initial consultation.
+                    <h2 class="font-display-lg text-display-lg mb-6 md:mb-8 text-on-surface">Ready to define your overhead space?</h2>
+                    <p class="font-body-lg text-body-lg text-secondary mb-8 md:mb-10 max-w-lg">
+                        Speak with our principal designers today. We provide detailed 3D visualizations as part of our free initial consultation.
                     </p>
                     <div class="flex flex-wrap gap-8">
                         <div class="flex items-center gap-4">
-                            <span class="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary">
+                            <span class="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary flex-shrink-0">
                                 <span class="material-symbols-outlined">call</span>
                             </span>
                             <div>
@@ -189,19 +478,10 @@
                                 <p class="font-headline-md text-body-lg text-on-surface">+62 21 555 0192</p>
                             </div>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <span class="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">mail</span>
-                            </span>
-                            <div>
-                                <p class="text-label-caps font-label-caps text-primary/60">EMAIL US</p>
-                                <p class="font-headline-md text-body-lg text-on-surface">design@eliteplafond.id</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="flex-1 w-full">
-                    <div class="bg-surface-container p-10 border border-primary/20 shadow-2xl">
+                    <div class="bg-surface-container p-6 md:p-10 border border-primary/20 shadow-2xl">
                         <form class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
@@ -213,19 +493,6 @@
                                     <input class="w-full bg-surface-container-low border-0 border-b border-primary/30 focus:border-primary focus:ring-0 text-on-surface transition-all py-3 px-0" type="tel"/>
                                 </div>
                             </div>
-                            <div>
-                                <label class="block font-label-caps text-label-caps mb-2 text-primary">PROJECT TYPE</label>
-                                <select class="w-full bg-surface-container-low border-0 border-b border-primary/30 focus:border-primary focus:ring-0 text-on-surface transition-all py-3 px-0">
-                                    <option>Residential Luxury</option>
-                                    <option>Commercial Office</option>
-                                    <option>Hospitality/Retail</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block font-label-caps text-label-caps mb-2 text-primary">MESSAGE (OPTIONAL)</label>
-                                <textarea class="w-full bg-surface-container-low border-0 border-b border-primary/30 focus:border-primary focus:ring-0 text-on-surface transition-all py-3 px-0" rows="3"></textarea>
-                            </div>
                             <button class="w-full bg-primary text-on-primary py-5 font-label-caps text-label-caps hover:brightness-110 transition-all mt-4" type="submit">
                                 REQUEST FREE CONSULTATION
                             </button>
@@ -235,146 +502,97 @@
             </div>
         </div>
     </section>
+</main>
 
-    <!-- Footer -->
-    <footer class="bg-surface-container-lowest border-t border-primary/20">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-max-width mx-auto px-margin-desktop py-20">
-            <div class="col-span-1 md:col-span-1">
-                <div class="font-display-lg text-headline-md text-primary mb-6">ElitePlafond</div>
-                <p class="font-body-md text-body-md text-secondary mb-8 max-w-xs">
-                    Crafting the horizon of your home with architectural precision and timeless design.
-                </p>
-                <div class="flex gap-4">
-                    <a class="text-primary hover:brightness-125 transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
-                    <a class="text-primary hover:brightness-125 transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
-                    <a class="text-primary hover:brightness-125 transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
-                </div>
-            </div>
-            <div>
-                <h4 class="font-label-caps text-label-caps text-primary mb-6">SERVICES</h4>
-                <ul class="space-y-4">
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Drywall Installation</a></li>
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Acoustic Ceilings</a></li>
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Custom Molding</a></li>
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Smart Lighting Integration</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-label-caps text-label-caps text-primary mb-6">QUICK LINKS</h4>
-                <ul class="space-y-4">
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Project Gallery</a></li>
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Pricing Guide</a></li>
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Privacy Policy</a></li>
-                    <li><a class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all" href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-label-caps text-label-caps text-primary mb-6">HEADQUARTERS</h4>
-                <p class="font-body-md text-body-md text-secondary mb-2">Lvl 12, Sudirman Central</p>
-                <p class="font-body-md text-body-md text-secondary mb-6">Jakarta, Indonesia 12190</p>
-                <div class="p-4 bg-primary/5 border border-primary/10">
-                    <p class="text-label-caps font-label-caps text-primary mb-1">AVAILABILITY</p>
-                    <p class="font-body-md text-body-md text-secondary">Mon-Sat: 08:00 — 19:00</p>
-                </div>
-            </div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-primary/20">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-14 md:py-20">
+        <div class="col-span-1 sm:col-span-2 md:col-span-1">
+            <div class="font-display-lg text-headline-md text-primary mb-6">ElitePlafond</div>
+            <p class="font-body-md text-body-md text-secondary mb-8 max-w-xs">
+                Crafting the horizon of your home with architectural precision.
+            </p>
         </div>
-        <div class="max-w-max-width mx-auto px-margin-desktop py-8 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="font-body-md text-body-md text-secondary/60">© 2024 ElitePlafond Architectural Ceilings. All rights reserved.</p>
-            <div class="flex gap-8">
-                <span class="text-label-caps font-label-caps text-primary/40">ISO 9001 CERTIFIED</span>
-                <span class="text-label-caps font-label-caps text-primary/40">PREMIUM MEMBER ARCHI-ID</span>
-            </div>
+        <div>
+            <h4 class="font-label-caps text-label-caps text-primary mb-6">SERVICES</h4>
+            <ul class="space-y-4">
+                <li><a onclick="switchPage('services')" class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all cursor-pointer">Plafon Gypsum</a></li>
+                <li><a onclick="switchPage('services')" class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all cursor-pointer">Plafon PVC</a></li>
+                <li><a onclick="switchPage('services')" class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all cursor-pointer">Plafon Kayu</a></li>
+                <li><a onclick="switchPage('services')" class="font-body-md text-body-md text-secondary hover:text-primary hover:underline decoration-primary transition-all cursor-pointer">Plafon GRC</a></li>
+            </ul>
         </div>
-    </footer>
+    </div>
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-8 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-center">
+        <p class="font-body-md text-body-md text-secondary/60">© 2024 ElitePlafond Architectural Ceilings. All rights reserved.</p>
+    </div>
+</footer>
 
-    <!-- Custom Tailwind Config & JS File -->
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-tertiary-fixed-variant": "#763300",
-                        "surface": "#16130b",
-                        "on-background": "#ece1d3",
-                        "secondary-fixed": "#3d392f",
-                        "inverse-on-surface": "#16130b",
-                        "on-surface": "#ece1d3",
-                        "tertiary-container": "#331200",
-                        "secondary-fixed-dim": "#28241b",
-                        "on-tertiary-fixed": "#331200",
-                        "outline-variant": "#4d4639",
-                        "on-primary-fixed": "#110e07",
-                        "surface-dim": "#16130b",
-                        "on-primary": "#110e07",
-                        "on-primary-fixed-variant": "#d4af37",
-                        "on-secondary": "#110e07",
-                        "tertiary-fixed-dim": "#ffb68e",
-                        "tertiary-fixed": "#d4af37",
-                        "primary-fixed-dim": "#b4952f",
-                        "surface-bright": "#3d392f",
-                        "on-primary-container": "#d4af37",
-                        "background": "#110e07",
-                        "on-tertiary": "#110e07",
-                        "on-secondary-container": "#ece1d3",
-                        "inverse-primary": "#d4af37",
-                        "primary": "#d4af37",
-                        "tertiary": "#d4af37",
-                        "on-error": "#ffffff",
-                        "primary-container": "#28241b",
-                        "surface-container": "#1f1b13",
-                        "outline": "#968f80",
-                        "surface-container-lowest": "#110e07",
-                        "on-secondary-fixed": "#ece1d3",
-                        "secondary": "#968f80",
-                        "surface-container-high": "#28241b",
-                        "error": "#ba1a1a",
-                        "surface-variant": "#4d4639",
-                        "surface-tint": "#d4af37",
-                        "on-tertiary-container": "#cf6721",
-                        "on-surface-variant": "#c6c6cd",
-                        "secondary-container": "#28241b",
-                        "surface-container-low": "#1f1b13",
-                        "on-error-container": "#ffdad6",
-                        "inverse-surface": "#ece1d3",
-                        "surface-container-highest": "#3d392f",
-                        "primary-fixed": "#d4af37",
-                        "on-secondary-fixed-variant": "#968f80",
-                        "error-container": "#93000a"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "unit": "8px",
-                        "gutter": "24px",
-                        "margin-desktop": "80px",
-                        "margin-mobile": "20px",
-                        "max-width": "1280px"
-                    },
-                    "fontFamily": {
-                        "display-lg-mobile": ["Metrophobic", "sans-serif"],
-                        "body-md": ["Hanken Grotesk", "sans-serif"],
-                        "headline-md": ["Metrophobic", "sans-serif"],
-                        "body-lg": ["Hanken Grotesk", "sans-serif"],
-                        "display-lg": ["Metrophobic", "sans-serif"],
-                        "label-caps": ["Hanken Grotesk", "sans-serif"]
-                    },
-                    "fontSize": {
-                        "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
-                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}]
-                    }
-                },
-            },
+<!-- SYSTEM JAVASCRIPT: CONTROL TRANSISI HALAMAN -->
+<script>
+    function switchPage(pageId) {
+        const homePage = document.getElementById('page-home');
+        const servicesPage = document.getElementById('page-services');
+        const navHome = document.getElementById('nav-home');
+        const navServices = document.getElementById('nav-services');
+        
+        let currentPage, targetPage;
+        
+        if (pageId === 'home') {
+            currentPage = servicesPage;
+            targetPage = homePage;
+            navServices.classList.remove('nav-active');
+            navHome.classList.add('nav-active');
+        } else {
+            currentPage = homePage;
+            targetPage = servicesPage;
+            navHome.classList.remove('nav-active');
+            navServices.classList.add('nav-active');
         }
-    </script>
-    <script src="script.js"></script>
+
+        // Kunci Pencegah redundansi jika halaman target memang sedang terbuka
+        if (targetPage.classList.contains('block')) return;
+
+        // Tahap 1: Mulai Fade-out halaman aktif
+        currentPage.classList.remove('opacity-100', 'translate-y-0');
+        currentPage.classList.add('opacity-0', 'translate-y-4');
+        
+        // Tahap 2: Tunggu durasi transisi CSS (450ms), eksekusi manipulasi DOM
+        setTimeout(() => {
+            currentPage.classList.add('hidden');
+            currentPage.classList.remove('block');
+            
+            targetPage.classList.remove('hidden');
+            targetPage.classList.add('block');
+            
+            // Gulung layar ke posisi paling atas dengan mulus
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            
+            // Tahap 3: Trigger animasi masuk Fade-In + Slide Up pada halaman tujuan
+            setTimeout(() => {
+                targetPage.classList.remove('opacity-0', 'translate-y-4');
+                targetPage.classList.add('opacity-100', 'translate-y-0');
+            }, 40); 
+            
+        }, 450); 
+    }
+
+    // Mobile hamburger nav
+    function toggleMobileNav() {
+        const panel = document.getElementById('mobile-nav-panel');
+        const icon = document.getElementById('mobile-menu-icon');
+        const isOpen = panel.classList.toggle('open');
+        icon.textContent = isOpen ? 'close' : 'menu';
+        icon.classList.toggle('open', isOpen);
+    }
+
+    function closeMobileNav() {
+        const panel = document.getElementById('mobile-nav-panel');
+        const icon = document.getElementById('mobile-menu-icon');
+        panel.classList.remove('open');
+        icon.textContent = 'menu';
+        icon.classList.remove('open');
+    }
+</script>
 </body>
 </html>
